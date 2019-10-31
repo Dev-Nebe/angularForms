@@ -7,6 +7,18 @@
             <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">Enter a name</div>
         </div>
 
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input type="text" [(ngModel)]="startDate" placeholder="Start Date" class="form-control" name="startDate" id="startDate" bsDatepicker>
+        </div>
+
+        Start Date: {{startDate}}
+
+        <!-- <button type="button" class="btn btn-primary" name="singleModel"
+                [(ngModel)]="singleModel" btnCheckbox
+                btnCheckboxTrue="On" btnCheckboxFalse="Off">
+          {{singleModel}}
+        </button> -->
 
         <div class="form-check form-group">
           <input class="form-check-input" type="checkbox" value="" id="emailOffers" name="emailOffers" [(ngModel)]="userSettings.emailOffers"l />
@@ -18,7 +30,16 @@
         <p>User Interface Style</p>
 
         <div class="form-group">
-          <div class="form-check">
+
+          <div class="btn-group">
+            <label class="btn btn-primary" [(ngModel)]="userSettings.interfaceStyle" btnRadio="Light" tabindex="0" role="button" name="interfaceStyle">Light</label>
+
+            <label class="btn btn-primary" [(ngModel)]="userSettings.interfaceStyle" btnRadio="Medium" tabindex="0" role="button" name="interfaceStyle">Medium</label>
+            
+            <label class="btn btn-primary" [(ngModel)]="userSettings.interfaceStyle" btnRadio="Dark" tabindex="0" role="button" name="interfaceStyle">Dark</label>
+          </div>
+
+          <!-- <div class="form-check">
               <input class="form-check-input" type="radio" name="interfaceStyle" id="lightInterface" value="light" checked [(ngModel)]="userSettings.interfaceStyle">
               <label class="form-check-label" for="lightInterface">
                 Light
@@ -37,16 +58,14 @@
               <label class="form-check-label" for="darkInterface">
                 Dark
               </label>
-          </div>
+          </div> -->
 
         </div>
 
         <div class="form-group">
           <label for="subscriptionType">Subscription Type</label>
           <select class="form-control" id="subscriptionType" name="subscriptionType" [(ngModel)]="userSettings.subscriptionType">
-            <option>Monthly</option>
-            <option>Annual</option>
-            <option>Lifetime</option>
+            <option *ngFor='let type of subscriptionTypes | async'>{{type}}</option>
           </select>
         </div>
 
@@ -54,6 +73,8 @@
           <label for="notes">Notes</label>
           <textarea class="form-control" id="notes" name="notes" rows="3" [(ngModel)]="userSettings.notes"></textarea>
         </div>
+
+        <div [hidden]="!postError" class="alert alert-danger">{{ postErrorMessage }}</div>
 
         <button class="btn btn-primary">Send</button>
     </form>
